@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+
+name = "LogConfig"
+version = "1.0.0-alpha"
+description = "A simple yet robust logging configuration library for Python applications."
+readme = "README.md"
+
+authors = [
+    {name = "Akeoott", email = "amejanin00@gmail.com"}
+]
+
+license = {file = "LICENSE"}
+
+requires-python = ">=3.8"
+
+keywords = ["logging", "log", "configuration", "library", "utility", "preset", "python"]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: OS Independent",
+    "Development Status :: 2 - Alpha",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Logging",
+]
+
+[project.urls]
+Homepage = "https://github.com/Akeoottt/LogConfig"
+"Bug Tracker" = "https://github.com/Akeoottt/LogConfig/issues"
+"Source Code" = "https://github.com/Akeoottt/LogConfig"
+
+dependencies = []
