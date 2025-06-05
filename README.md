@@ -6,7 +6,7 @@
 LogConfig provides an incredibly easy-to-use, modular, and enterprise-ready logging solution designed to simplify logging setup for Python applications of any scale, from quick scripts to complex backend systems.<br>
 
 > [!WARNING]
-> This project is licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0) - see the [LICENSE](https://www.gnu.org/licenses/lgpl-3.0.html) file for details.
+> This project is licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0) - see the [LICENSE](https://www.gnu.org/licenses/lgpl-3.0.html) website or [LICENSE](https://github.com/Akeoottt/LogConfig/blob/main/LICENCE) file for details.
 
 ## ✨ Features
 
