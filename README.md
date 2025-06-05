@@ -1,9 +1,9 @@
-# LogConfig: The Effortless Python Logging Library
+# LoggingConfig: The Effortless Python Logging Library
 
 ![PyPI - Version](https://img.shields.io/pypi/v/LogConfig.svg)
 **Accidental yet powerful: a simple Python library for robust, configurable logging.**
 
-LogConfig provides an incredibly easy-to-use, modular, and enterprise-ready logging solution designed to simplify logging setup for Python applications of any scale, from quick scripts to complex backend systems.<br>
+LoggingConfig provides an incredibly easy-to-use, modular, and enterprise-ready logging solution designed to simplify logging setup for Python applications of any scale, from quick scripts to complex backend systems.<br>
 
 > [!WARNING]
 > This project is licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0) - see the [LICENSE](https://www.gnu.org/licenses/lgpl-3.0.html) website or [LICENSE](https://github.com/Akeoottt/LogConfig/blob/main/LICENCE) file for details.
@@ -21,10 +21,10 @@ LogConfig provides an incredibly easy-to-use, modular, and enterprise-ready logg
 
 ## 🚀 Installation
 
-You can install `LogConfig` directly from PyPI using pip:
+You can install `LoggingConfig` directly from PyPI using pip:
 
 ```bash
-pip install LogConfig
+pip install LoggingConfig
 ```
 > [!NOTE]
 > Not ready for use!
