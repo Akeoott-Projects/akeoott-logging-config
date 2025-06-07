@@ -1,10 +1,9 @@
-__version__ = "1.0.2"
+__version__ = "1.1.0"
 __author__ = "Akeoott/Akeoottt"
 __description__ = "A simple yet robust logging configuration library for Python applications."
 
-from .logging_config import setup_library_logging, get_library_logger
+from .logging_config import LogConfig
 
 __all__ = [
-    "setup_library_logging",
-    "get_library_logger",
+    "LogConfig", # Expose the LogConfig class
 ]

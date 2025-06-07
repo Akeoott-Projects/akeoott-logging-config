@@ -2,24 +2,30 @@ import logging
 import sys
 from pathlib import Path
 
-_LOGGER_NAME = "LogConfig"
-
-# Defined the default log format as a constant cuz IDE's like Visual Studio Code cuts output off and this fixes it.
 _DEFAULT_LOG_FORMAT = '%(levelname)s (%(asctime)s) [Line: %(lineno)d in %(filename)s - %(funcName)s]: %(message)s'
 _DEFAULT_DATE_FORMAT = '%d/%m/%Y %I:%M:%S %p'
 
 class LogConfig:
     """
-    A class to configure the logging for your python application
-    Allows activation, console output, and file saving.
+    A class to configure the logging for your python application.
+    Allows activation, console output, and file saving for a specific logger instance.
     """
-    def __init__(self):
-        # Get the specific logger or whatever
-        self.logger = logging.getLogger(_LOGGER_NAME)
+    def __init__(self, logger_name: str = "AkeoottLogger"):
+        """
+        Initializes the LogConfig instance for a specific logger.
+
+        Args:
+            logger_name (str):  A unique name for this logger.
+                                If multiple LogConfig instances use the same name,
+                                they will configure the same underlying logger.
+                                Defaults to "AkeoottLogger".
+        """
+        self.logger = logging.getLogger(logger_name)
         self.logger.propagate = False
 
-        # Add a NullHandler by default cuz no one likes logs without requesting them.
-        # So if the user doesn't configure logging, no messages will be displayed,
+        # Add a NullHandler by default if no handlers are present.
+        # This prevents "No handlers could be found for logger..." warnings
+        # if the user doesn't configure logging for this specific logger.
         if not self.logger.handlers:
             self.logger.addHandler(logging.NullHandler())
 
@@ -34,10 +40,10 @@ class LogConfig:
               log_level: int = logging.INFO,
               log_format: str = _DEFAULT_LOG_FORMAT,
               date_format: str = _DEFAULT_DATE_FORMAT,
-              log_file_mode: str = 'a' # Appending ofc
+              log_file_mode: str = 'a'
         ):
         """
-        Configures the logging for the library.
+        Configures this specific logger instance.
 
         Args:
             activate_logging (bool): If True, logging is enabled. If False, logging is disabled.
@@ -47,7 +53,7 @@ class LogConfig:
                 - If a directory, a default filename will be used.
                 - If 'script_dir', the log file will be placed next to the main script.
                 - If None and save_log is True, will use current program directory.
-
+            log_file_name (str): The name of the log file.
             log_level (int): The minimum logging level to capture (logging.DEBUG, logging.INFO etc).
             log_format (str): The format string for log messages.
             date_format (str): The date/time format string.
@@ -73,7 +79,8 @@ class LogConfig:
             console_handler.setLevel(log_level)
             console_handler.setFormatter(formatter)
             self.logger.addHandler(console_handler)
-            self.logger.info("Logging to console activated.")
+            # Use self.logger to log its own config messages
+            self.logger.info(f"[{self.logger.name}] Logging to console activated.")
 
         # File Handler
         if save_log:
@@ -87,23 +94,26 @@ class LogConfig:
                 file_handler.setLevel(log_level)
                 file_handler.setFormatter(formatter)
                 self.logger.addHandler(file_handler)
-                self.logger.info(f"Logging to file '{final_log_file_path}' activated (mode: '{log_file_mode}').")
+                # Use self.logger to log its own config messages
+                self.logger.info(f"[{self.logger.name}] Logging to file '{final_log_file_path}' activated (mode: '{log_file_mode}').")
             except Exception as e:
                 # Inform user via console if file logging fails (Hope its not my fault)
-                self.logger.error(f"Failed to set up file logging to '{final_log_file_path}': {e}")
+                self.logger.error(f"[{self.logger.name}] Failed to set up file logging to '{final_log_file_path}': {e}")
                 if not print_log: # If console isn't already active, add a temporary one to report
                     temp_console_handler = logging.StreamHandler(sys.stderr)
                     temp_console_handler.setFormatter(formatter)
                     self.logger.addHandler(temp_console_handler)
-                    self.logger.error("File logging failed, reverting to console for this message.")
+                    self.logger.error(f"[{self.logger.name}] File logging failed, reverting to console for this message.")
                     self.logger.removeHandler(temp_console_handler)
 
 
         self._is_configured = True
-        self.logger.info(f"Library logging configured. Level: {logging.getLevelName(log_level)}")
+        self.logger.info(f"[{self.logger.name}] Logging configured. Level: {logging.getLevelName(log_level)}")
+
 
     def _clear_handlers(self):
-        """Removes all handlers from the logger."""
+        """Removes all handlers from this specific logger."""
+        # Using list() to iterate over a copy, as removing handlers modifies the list
         for handler in list(self.logger.handlers):
             self.logger.removeHandler(handler)
 
@@ -117,7 +127,7 @@ class LogConfig:
             else:
                 # Fallback for interactive sessions
                 self.logger.warning(
-                    "'script_dir' logging requested but main script directory could not be determined. "
+                    f"[{self.logger.name}] 'script_dir' logging requested but main script directory could not be determined. "
                     "Logging to current directory instead."
                 )
                 return Path.cwd() / log_file_name
@@ -126,42 +136,8 @@ class LogConfig:
             if potential_path.is_dir():
                 return potential_path / log_file_name
             else:
+                # Assume it's a full file path like "path/to/my_log.log"
                 return potential_path
         else: # Default if save_log is True but no path is provided
-            self.logger.info("No log_file_path provided, defaulting to current directory.")
+            self.logger.info(f"[{self.logger.name}] No log_file_path provided, defaulting to current directory.")
             return Path.cwd() / log_file_name
-
-# Now global instance for easy access
-# Do `log_config = LogConfig()` and then call `log_config.setup()` from main application to configure.
-_log_config_instance = LogConfig()
-
-def get_library_logger():
-    """Returns the configured logger."""
-    return _log_config_instance.logger
-
-def setup_library_logging(
-    activate_logging: bool = True,
-    print_log: bool = True,
-    save_log: bool = False,
-    log_file_path: str | Path | None = None,
-    log_file_name: str = "logs.log",
-    log_level: int = logging.INFO,
-    log_format: str = _DEFAULT_LOG_FORMAT,
-    date_format: str = _DEFAULT_DATE_FORMAT,
-    log_file_mode: str = 'a'
-):
-    """
-    Function to set up logging.
-    This is the primary function users should call.
-    """
-    _log_config_instance.setup(
-        activate_logging=activate_logging,
-        print_log=print_log,
-        save_log=save_log,
-        log_file_path=log_file_path,
-        log_file_name=log_file_name,
-        log_level=log_level,
-        log_format=log_format,
-        date_format=date_format,
-        log_file_mode=log_file_mode
-    )
