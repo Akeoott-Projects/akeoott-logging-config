@@ -2,8 +2,8 @@ import logging
 import sys
 from pathlib import Path
 
-_DEFAULT_LOG_FORMAT = '%(levelname)s (%(asctime)s) [Line: %(lineno)d in %(filename)s - %(funcName)s]: %(message)s'
-_DEFAULT_DATE_FORMAT = '%d/%m/%Y %I:%M:%S %p'
+_DEFAULT_LOG_FORMAT = '%(levelname)s (%(asctime)s.%(msecs)03d)     %(message)s [Line: %(lineno)d in %(filename)s - %(funcName)s]'
+_DEFAULT_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 class LogConfig:
     """
@@ -50,9 +50,9 @@ class LogConfig:
             print_log (bool): If True, log messages are printed to the console.
             save_log (bool): If True, log messages are saved to a file.
             log_file_path (str | Path, optional): The path to the log file.
-                - If a directory, a default filename will be used.
-                - If 'script_dir', the log file will be placed next to the main script.
-                - If None and save_log is True, will use current program directory.
+                                                  - If a directory, a default filename will be used.
+                                                  - If 'script_dir', the log file will be placed next to the main script.
+                                                  - If None and save_log is True, will use current program directory.
             log_file_name (str): The name of the log file.
             log_level (int): The minimum logging level to capture (logging.DEBUG, logging.INFO etc).
             log_format (str): The format string for log messages.
