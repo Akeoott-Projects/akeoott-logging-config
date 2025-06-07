@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 
 name = "LoggingConfig"
-version = "1.0.0-alpha"
+version = "1.0.0-beta"
 description = "A simple yet robust logging configuration library for Python applications."
 readme = "README.md"
 
@@ -28,7 +28,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Operating System :: OS Independent",
-    "Development Status :: 2 - Alpha",
+    "Development Status :: 3 - Beta",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: System :: Logging",
 ]
@@ -37,5 +37,4 @@ dependencies = []
 
 [project.urls]
 Homepage = "https://github.com/Akeoottt/LoggingConfig"
-"Bug Tracker" = "https://github.com/Akeoottt/LoggingConfig/issues"
-"Source Code" = "https://github.com/Akeoottt/LoggingConfig"
+Issues = "https://github.com/Akeoottt/LoggingConfig/issues"
