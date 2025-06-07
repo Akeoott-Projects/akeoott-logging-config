@@ -1,4 +1,4 @@
-# LoggingConfig: The Effortless Python Logging Library
+# akeoot-logging-config: The Effortless Python Logging Library
 
 ![PyPI - Version](https://img.shields.io/pypi/v/LogConfig.svg)
 **Accidental yet powerful: a simple Python library for robust, configurable logging.**
@@ -21,8 +21,8 @@ LoggingConfig provides an incredibly easy-to-use, modular, and enterprise-ready 
 
 ## 🚀 Installation
 
-You can install `LoggingConfig` directly from PyPI using pip:
+You can install `akeoot-logging-config` directly from PyPI using pip:
 
 ```bash
-pip install LoggingConfig
+pip install akeoot-logging-config
 ```
