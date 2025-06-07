@@ -4,6 +4,10 @@ from pathlib import Path
 
 _LOGGER_NAME = "LogConfig"
 
+# Defined the default log format as a constant cuz IDE's like Visual Studio Code cuts output off and this fixes it.
+_DEFAULT_LOG_FORMAT = '%(levelname)s (%(asctime)s) [Line: %(lineno)d in %(filename)s - %(funcName)s]: %(message)s'
+_DEFAULT_DATE_FORMAT = '%d/%m/%Y %I:%M:%S %p'
+
 class LogConfig:
     """
     A class to configure the logging for your python application
@@ -28,8 +32,8 @@ class LogConfig:
               log_file_path: str | Path | None = None,
               log_file_name: str = "logs.log",
               log_level: int = logging.INFO,
-              log_format: str = '%(levelname)s (%(asctime)s) [Line: %(lineno)d in %(filename)s - %(funcName)s]: %(message)s',
-              date_format: str = '%d/%m/%Y %I:%M:%S %p',
+              log_format: str = _DEFAULT_LOG_FORMAT,
+              date_format: str = _DEFAULT_DATE_FORMAT,
               log_file_mode: str = 'a' # Appending ofc
         ):
         """
@@ -74,7 +78,7 @@ class LogConfig:
         # File Handler
         if save_log:
             final_log_file_path = self._resolve_log_file_path(log_file_path, log_file_name)
-            
+
             # Check that directory exists
             final_log_file_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -128,7 +132,7 @@ class LogConfig:
             return Path.cwd() / log_file_name
 
 # Now global instance for easy access
-# Do `log_config = LogConfig()` and then call `log_config.setup()` from main application to configure. 
+# Do `log_config = LogConfig()` and then call `log_config.setup()` from main application to configure.
 _log_config_instance = LogConfig()
 
 def get_library_logger():
@@ -140,10 +144,10 @@ def setup_library_logging(
     print_log: bool = True,
     save_log: bool = False,
     log_file_path: str | Path | None = None,
-    log_file_name: str = "log",
+    log_file_name: str = "logs.log",
     log_level: int = logging.INFO,
-    log_format: str = '%(levelname)s (%(asctime)s) [Line: %(lineno)d in %(filename)s - %(funcName)s]: %(message)s',
-    date_format: str = '%d/%m/%Y %I:%M:%S %p',
+    log_format: str = _DEFAULT_LOG_FORMAT,
+    date_format: str = _DEFAULT_DATE_FORMAT,
     log_file_mode: str = 'a'
 ):
     """
