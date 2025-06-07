@@ -26,6 +26,3 @@ You can install `LoggingConfig` directly from PyPI using pip:
 ```bash
 pip install LoggingConfig
 ```
-> [!NOTE]
-> Not ready for use!
-> Will soon be release ready and pip installable
