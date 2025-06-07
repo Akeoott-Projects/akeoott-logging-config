@@ -36,5 +36,5 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/Akeoottt/LoggingConfig"
-Issues = "https://github.com/Akeoottt/LoggingConfig/issues"
+Homepage = "https://github.com/Akeoottt/akeoott-logging-config"
+Issues = "https://github.com/Akeoottt/akeoott-logging-config/issues"
