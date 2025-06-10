@@ -40,7 +40,9 @@ class LogConfig:
               log_level: int = logging.INFO,
               log_format: str = _DEFAULT_LOG_FORMAT,
               date_format: str = _DEFAULT_DATE_FORMAT,
-              log_file_mode: str = 'a'
+              log_file_mode: str = 'a',
+              thirdparty_logger_target: str | None = None,
+              thirdparty_logger_level: int = logging.CRITICAL + 1,
         ):
         """
         Configures this specific logger instance.
@@ -58,6 +60,8 @@ class LogConfig:
             log_format (str): The format string for log messages.
             date_format (str): The date/time format string.
             log_file_mode (str): Mode for opening the log file (a for append, w for overwrite).
+            thirdparty_logger_target (str | None): Name of the targeted third-party logger.
+            thirdparty_logger_level (int): Level to set (default disables all logging).
         """
         # Clear existing handlers so no duplicate logs if setup is called multiple times for some reason -_-
         self._clear_handlers()
@@ -106,6 +110,7 @@ class LogConfig:
                     self.logger.error(f"[{self.logger.name}] File logging failed, reverting to console for this message.")
                     self.logger.removeHandler(temp_console_handler)
 
+        self.silence_thirdparty_loggers(thirdparty_logger_target, thirdparty_logger_level)
 
         self._is_configured = True
         self.logger.info(f"[{self.logger.name}] Logging configured. Level: {logging.getLevelName(log_level)}")
@@ -141,3 +146,12 @@ class LogConfig:
         else: # Default if save_log is True but no path is provided
             self.logger.info(f"[{self.logger.name}] No log_file_path provided, defaulting to current directory.")
             return Path.cwd() / log_file_name
+        
+    def silence_thirdparty_loggers(self, thirdparty_logger_target: str | None, thirdparty_logger_level: int):
+        if not thirdparty_logger_target:
+            return
+        target_logger = logging.getLogger(thirdparty_logger_target)
+        target_logger.setLevel(thirdparty_logger_level)
+        for handler in list(target_logger.handlers):
+            target_logger.removeHandler(handler)
+        target_logger.addHandler(logging.NullHandler())
