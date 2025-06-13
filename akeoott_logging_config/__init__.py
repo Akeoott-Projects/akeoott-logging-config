@@ -1,4 +1,4 @@
-__version__ = "1.1.1"
+__version__ = "1.2.0"
 __author__ = "Akeoott/Akeoottt"
 __description__ = "A simple yet robust logging configuration library for Python applications."
 
