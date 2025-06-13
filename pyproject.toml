@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 
-name = "akeoott-logging-config"
+name = "akeoott_logging_config"
 version = "1.2.0"
 description = "A simple yet robust logging configuration library for Python applications."
 readme = "README.md"
